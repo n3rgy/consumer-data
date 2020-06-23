@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>n3rgy data Consumer Smart Meter Demonstrator</title>
+<link rel="stylesheet" href="n3rgy.css">
+
+<script type="text/javascript">
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {   
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 06:00:01 UTC; path=/;';  
+    document.cookieform.apiKey.value = "";
+}
+
+function setAPIcookie() {
+
+    setCookie("n3rgyConsumerAuthorization", document.cookieform.apiKey.value,1);
+}
+
+
+function loadAPIcookie() {
+    var n3rgyCookie = getCookie("n3rgyConsumerAuthorization");
+
+    if ( n3rgyCookie != null ) {
+	document.cookieform.apiKey.value = n3rgyCookie;
+    }
+	
+}
+
+</script>
+
+</head>
+
+
+<body bgcolor="#637381" onload="JavaScript: loadAPIcookie()">
+<center>
+<img src="https://data.n3rgy.com/assets/img/logo/logo-light.png"><br>
+<font size=+4 face=Lato color=white><b>Consumer Data Demonstrator</b></font>
+<p>
+<font size=+1><b>* Beta service, no warrantees expressed or implied *</b></font>
+<p>
+In order to use this demonstrator please sign up at <a href="https://data.n3rgy.com/consumer">https://data.n3rgy.com/consumer</a> to authorise your data to be read by n3rgy and enable access to the consumer portal.<br>
+All code used in this demonstrator is available at <a href="https://github.com/n3rgy/consumer-data">https://github.com/n3rgy/consumer-data</a><br><br>
+<b>NOTE:</b> <i>Please ensure you have connected via HTTPS to ensure the safety of your API keys </i>
+
+</center>
+<p>
+<h1>IHD MAC Key</h1>
+Please set and check your full IHD MAC (EUID), this is a 16 character string (hexidecimal) which is typically printed on the bottom of your In Home Display. Often printed as 01-23-34-45-67-89-AB-CD, please input without the '-' separators.<br>
+The code will be stored within a cookie and persist across all interactions until cleared or expired (1 day)
+<p>
+<form name="cookieform" onSubmit="Javascript:return setAPIcookie()">
+IHD EUI (in full): <input type="password" name="apiKey" length="20"><br>
+<input name="Submit" type="button" value="Set" onClick="JavaScript: setAPIcookie()">
+<input name="Submit" type="button" value="Clear" onClick="JavaScript: eraseCookie('n3rgyConsumerAuthorization')">
+</form>
+
+<p>
+<hr>
+<h1>Browse data</h1>
+<form action="/cgi-bin/n3rgy-consumer-data.py" method="get">
+<input type="submit" value="Browse">
+</form>
+<hr>
+<p>
+
+
+<hr>
+<i>Copyright n3rgy data ltd, all rights reserved.</i>
+
+</body>
+</html>
