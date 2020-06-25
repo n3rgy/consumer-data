@@ -56,9 +56,16 @@ print "<b>n3rgy data API Response: </b><br>"
 rdata = requests.get( url=apiurl, headers=headers )
 
 # Get JSON from response
+# [added support for output=csv parameter, just print if its not a json response]
 #
-r = rdata.json()
-
+try:
+	r = rdata.json()
+except:
+        print rdata.text
+        print "</pre><p>"
+        print "<h3><a href='..'>back</a></h3></body></html>"
+        exit
+	
 # Copy JSON to add HTML links
 #
 h = r.copy()
