@@ -8,3 +8,5 @@ n3rgy-consumer-data.py converts the interface into smart meter consumption, expo
 Scripts can be found and interacted with at https://homebrew.n3rgy.com/consumer-data
 
 Please note, these scripts are for guidance only and typically do not implement sufficient error management for live service.
+
+Any questions or issues regarding the service please email support(a)n3rgy.com
